@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Alkandaryo.iml" filepath="$PROJECT_DIR$/Alkandaryo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/alkandaryo-library/library.iml" filepath="$PROJECT_DIR$/alkandaryo-library/library.iml" />
     </modules>
   </component>
 </project>

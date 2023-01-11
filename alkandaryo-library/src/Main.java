@@ -1,5 +1,8 @@
+import alkandaryo.source.Balance;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        Balance balance = new Balance(1000);
+        System.out.println(balance.setName("Hello"));
     }
 }

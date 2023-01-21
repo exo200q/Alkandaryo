@@ -1,8 +1,7 @@
-import alkandaryo.source.Balance;
+import alkandaryo.calendar.Day;
 
 public class Main {
     public static void main(String[] args) {
-        Balance balance = new Balance(1000);
-        System.out.println(balance.setName("Hello"));
+        System.out.println(Day.ofMonth(5, 5));
     }
 }

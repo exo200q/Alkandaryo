@@ -1,4 +1,4 @@
-package alkandaryo.date;
+package alkandaryo.calendar;
 
 import java.time.LocalDate;
 import java.util.Objects;

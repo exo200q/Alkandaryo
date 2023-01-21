@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Alkandaryo.iml" filepath="$PROJECT_DIR$/Alkandaryo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Library/Alkandaryo_Library.iml" filepath="$PROJECT_DIR$/Library/Alkandaryo_Library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Alkandaryo.iml" filepath="$PROJECT_DIR$/.idea/Alkandaryo.iml" />
       <module fileurl="file://$PROJECT_DIR$/alkandaryo-library/alkandaryo-library.iml" filepath="$PROJECT_DIR$/alkandaryo-library/alkandaryo-library.iml" />
     </modules>
   </component>

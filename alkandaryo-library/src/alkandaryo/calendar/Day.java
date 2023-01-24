@@ -4,19 +4,20 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Day extends Date.Builder<Day> {
+   {
+      this.month = localDate.getMonthValue();
+      this.year  = localDate.getYear();
+   }
+
    private int month;
    private int year;
 
    public Day() {
-      this.month  = localDate.getMonthValue();
       this.number = localDate.getDayOfMonth();
-      this.year   = localDate.getYear();
    }
 
    public Day(int number) {
-      this.month  = localDate.getMonthValue();
       this.number = number;
-      this.year   = localDate.getYear();
    }
 
    public void setMonth(int month) {
@@ -51,6 +52,7 @@ public class Day extends Date.Builder<Day> {
 
    @Override
    public String toString() {
-      return String.format("%s, %s", getWeek(), number);
+      return String.format("%.3s, %s %d, %d", getWeek(),
+              new Month(month).getName(), number, year);
    }
 }

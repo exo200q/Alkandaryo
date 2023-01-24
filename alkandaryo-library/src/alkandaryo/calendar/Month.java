@@ -8,10 +8,10 @@ import java.util.Objects;
 
 public class Month extends Date.Builder<Month> {
     {
-        this.year = localDate.getYear();
+        this.year = new Year();
     }
 
-    private int year;
+    private Year year;
 
     public Month() {
         this.number = localDate.getMonthValue();
@@ -21,27 +21,27 @@ public class Month extends Date.Builder<Month> {
         this.number = number;
     }
 
-    public int getYear() {
+    public Year getYear() {
         return year;
     }
 
     public void setYear(int year) {
-        this.year = year;
+        this.year = new Year(year);
     }
 
     public String getName() {
-        return Date.baseName(LocalDate.of(year, number, 1).getMonth().name());
+        return Date.baseName(LocalDate.of(year.number, number, 1).getMonth().name());
     }
 
     public int getLength() {
-        return LocalDate.of(year, number, 1).getMonth().maxLength();
+        return LocalDate.of(year.number, number, 1).getMonth().maxLength();
     }
 
     public int getWeeks() {
         var calendar = Calendar.getInstance(Alkandaryo.locale);
 
-        calendar.set(Calendar.MONTH,        number);
-        calendar.set(Calendar.YEAR,         year);
+        calendar.set(Calendar.MONTH, number);
+        calendar.set(Calendar.YEAR,  year.number);
 
         return calendar.get(Calendar.WEEK_OF_MONTH);
     }
@@ -54,6 +54,6 @@ public class Month extends Date.Builder<Month> {
 
     @Override
     public String toString() {
-        return String.format("%d, %s", year, Date.baseName(getName()));
+        return String.format("%d, %s", year.number, Date.baseName(getName()));
     }
 }

@@ -5,12 +5,12 @@ import java.util.Objects;
 
 public class Day extends Date.Builder<Day> {
    {
-      this.month = localDate.getMonthValue();
-      this.year  = localDate.getYear();
+      this.month = new Month();
+      this.year  = new Year();
    }
 
-   private int month;
-   private int year;
+   private Month month;
+   private Year year;
 
    public Day() {
       this.number = localDate.getDayOfMonth();
@@ -21,24 +21,24 @@ public class Day extends Date.Builder<Day> {
    }
 
    public void setMonth(int month) {
-      this.month = month;
+      this.month = new Month(month);
    }
 
-   public int getMonth() {
+   public Month getMonth() {
       return month;
    }
 
    public void setYear(int year) {
-      this.year = year;
+      this.year = new Year(year);
    }
 
-   public int getYear() {
+   public Year getYear() {
       return year;
    }
 
    public String getWeek() {
       return Date.baseName(LocalDate
-            .of(year, month, number)
+            .of(year.number, month.number, number)
             .getDayOfWeek()
             .name());
    }
@@ -53,6 +53,6 @@ public class Day extends Date.Builder<Day> {
    @Override
    public String toString() {
       return String.format("%.3s, %s %d, %d", getWeek(),
-              new Month(month).getName(), number, year);
+              month.getName(), number, year.number);
    }
 }

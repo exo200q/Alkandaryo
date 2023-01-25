@@ -1,12 +1,9 @@
-import alkandaryo.calendar.Day;
-import alkandaryo.calendar.Month;
+import alkandaryo.calendar.Date;
+
+import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
-        var m = new Day();
-
-        m.setMonth(2);
-
-        System.out.println(m);
+        System.out.println();
     }
 }

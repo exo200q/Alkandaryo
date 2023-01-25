@@ -50,4 +50,67 @@ public class Date {
       return name.toLowerCase().replaceFirst("[a-z]",
                   name.substring(0, 1).toUpperCase());
    }
+
+   private Day   day;
+   private Month month;
+   private Year  year;
+
+   public Date() {
+      this.day   = new Day();
+      this.month = new Month();
+      this.year  = new Year();
+   }
+
+   public Date(int month, int day, int year) {
+      this.day   = new Day(day);
+      this.month = new Month(month);
+      this.year  = new Year(year);
+   }
+
+   public Day getDay() {
+      return day;
+   }
+
+   public Month getMonth() {
+      return month;
+   }
+
+   public Year getYear() {
+      return year;
+   }
+
+   public void setDay(Day day) {
+      this.day = day;
+   }
+
+   public void setMonth(Month month) {
+      this.month = month;
+   }
+
+   public void setYear(Year year) {
+      this.year = year;
+   }
+
+   public Date next() {
+      day.next();
+      return this;
+   }
+
+   public Date previous() {
+      day.previous();
+      return this;
+   }
+
+   @Override
+   public boolean equals(Object object) {
+      return super.equals(object)
+              && Objects.equals(((Date) object).day,   day)
+              && Objects.equals(((Date) object).month, month)
+              && Objects.equals(((Date) object).year,  year);
+   }
+
+   @Override
+   public String toString() {
+      return day.toString();
+   }
 }

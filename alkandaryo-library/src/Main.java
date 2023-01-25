@@ -3,6 +3,10 @@ import alkandaryo.calendar.Month;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println(new Month());
+        var m = new Day();
+
+        m.setMonth(2);
+
+        System.out.println(m);
     }
 }

@@ -21,7 +21,7 @@ public class Day extends Date.Builder<Day> {
    }
 
    public void setMonth(int month) {
-      this.month = new Month(month);
+      this.month.number = month;
    }
 
    public Month getMonth() {
@@ -29,7 +29,7 @@ public class Day extends Date.Builder<Day> {
    }
 
    public void setYear(int year) {
-      this.year = new Year(year);
+      this.year.number = year;
    }
 
    public Year getYear() {

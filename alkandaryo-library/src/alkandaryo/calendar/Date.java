@@ -39,9 +39,14 @@ public class Date {
                else ((Day) this).setMonth(1);
                this.number = 1;
             }
+         } else if (this instanceof Month) {
+            if (number < 12) number += 1;
+            else {
+               ((Month) this).setYear(((Month) this).getYear().number +1);
+               number = 1;
+            }
          }
-         else if (this instanceof Month) this.number = number < 12 ? number +1 : 1;
-         else if (this instanceof Year)  this.number += 1;
+         else this.number += 1;
          return (B) this;
       }
 
@@ -56,9 +61,13 @@ public class Date {
                else ((Day) this).setMonth(12);
                this.number = ((Day) this).getMonth().getLength();
             }
+         } else if (this instanceof Month) {
+            if (number > 1) number -= 1;
+            else {
+               ((Month) this).setYear(((Month) this).getYear().number -1);
+            }
          }
-         if (this instanceof Month) this.number = number > 1 ? number -1 : ((Month) this).getLength();
-         if (this instanceof Year)  this.number = number > 1 ? number -1 : this.getValue();
+         else this.number = number > 1 ? number -1 : this.getValue();
          return (B) this;
       }
 
@@ -74,7 +83,6 @@ public class Date {
 
       public Range(Date from, Date to) {
          this.weeks = new ArrayList<>();
-
          while (from.day.hashCode() <= to.day.hashCode()) {
             weeks.add(from.day.getWeek());
             from.next();
@@ -83,6 +91,31 @@ public class Date {
 
       public int countOfDays() {
          return weeks.size();
+      }
+
+      @SuppressWarnings("ReassignedVariable")
+      public int countOfMonths() {
+         int counts = 0;
+         int from   = 0;
+         int month  = 1; // Default: January
+
+         if (weeks.stream().findFirst().isPresent()) {
+            from  = weeks.stream().findFirst().get().getDay().number;
+            month = weeks.stream().findFirst().get().getDay().getMonth().getValue();
+         }
+
+         for (Day.Week week : weeks) {
+            if (Objects.equals(from, week.getDay().getValue())
+                  && !Objects.equals(month, week.getDay().getMonth().getValue())) {
+               month = week.getDay().getMonth().getValue();
+               counts += 1;
+            }
+         }
+         return counts;
+      }
+
+      public int countOfYears() {
+         return countOfMonths() / 12;
       }
 
       public int countOfWeeks() {
@@ -147,18 +180,22 @@ public class Date {
 
    public Date next() {
       if (day.getValue() < month.getLength()) {
-         day.next();
+         this.day = day.next();
       } else if (month.getValue() < 12) {
-         month.next();
-         day.next();
+         this.month = month.next();
+         this.day   = day.next();
 
          // Force month setting...
          // day.setMonth(month.number);
       } else {
-         year.next();
-         month.next();
-         day.next();
+         this.year  = year.next();
+         this.month = month.next();
+         this.day   = day.next();
       }
+
+      // Month and Day's year reference...
+      month.setYear(year.number);
+      day  .setYear(year.number);
       return this;
    }
 

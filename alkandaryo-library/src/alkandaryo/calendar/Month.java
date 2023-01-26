@@ -5,21 +5,25 @@ import alkandaryo.Alkandaryo;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.Calendar;
-import java.util.Objects;
 
 public class Month extends Date.Builder<Month> {
     {
         this.year = new Year();
+        this.year.month = this;
     }
 
-    private Year year;
+    private final Year year;
 
     public Month() {
         this.number = localDate.getMonthValue();
     }
 
     public Month(int number) {
-        this.number = number;
+        super(number, LocalDate.of(new Year().number, number, 1));
+    }
+
+    public Month(int number, int year) {
+        super(number, LocalDate.of(year, number, 1));
     }
 
     public Year getYear() {
@@ -27,7 +31,7 @@ public class Month extends Date.Builder<Month> {
     }
 
     public void setYear(int year) {
-        this.year = new Year(year);
+        this.year.number = year;
     }
 
     public String getName() {
@@ -35,11 +39,12 @@ public class Month extends Date.Builder<Month> {
     }
 
     public int getLength() {
-        var month = LocalDate.of(year.number, number, 1).getMonth();
+        var month = LocalDate.of(year.number, number, 1);
         try {
-            return LocalDate.of(year.number, number, month.maxLength()).getMonth().maxLength();
+            return LocalDate.of(year.number, number, month.getMonth().maxLength())
+                  .getMonth().maxLength();
         } catch (DateTimeException dateTimeException) {
-            return month.maxLength() -1;
+            return month.getMonth().maxLength() -1;
         }
     }
 

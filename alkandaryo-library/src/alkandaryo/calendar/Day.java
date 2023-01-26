@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Day extends Date.Builder<Day> {
    public static class Week {
-      protected int day;
+      protected Day day;
       protected int number;
 
       public static final int MONDAY    = 1;
@@ -34,7 +34,7 @@ public class Day extends Date.Builder<Day> {
       }
 
       public Day getDay() {
-         return day >= 1 && day <= 31 ? new Day(day) : null;
+         return day;
       }
 
       public int getValue() {
@@ -56,6 +56,9 @@ public class Day extends Date.Builder<Day> {
    {
       this.month = new Month();
       this.year  = new Year();
+
+      this.year.day   = this;
+      this.year.month = this.month;
    }
 
    private final Month month;
@@ -90,7 +93,13 @@ public class Day extends Date.Builder<Day> {
             .of(year.number, month.number, number)
             .getDayOfWeek()
             .getValue());
-      week.day = number;
+      week.day = new Day(number);
+      week.day
+            .month
+            .number = month.number;
+      week.day
+            .year
+            .number = year.number;
       return week;
    }
 
@@ -104,7 +113,7 @@ public class Day extends Date.Builder<Day> {
    @Override
    public final int hashCode() {
       return Integer.parseInt(String
-            .format("%d%d%02d", year.number, month.number, number));
+            .format("%d%02d%02d", year.number, month.number, number));
    }
 
    @Override

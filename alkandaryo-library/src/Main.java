@@ -7,9 +7,10 @@ import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
-        var range = new Date.Range(new Date(), new Date(3, 31, 2023));
+        var range = new Date.Range(new Date(2, 26, 2023),
+              new Date(2, 26, 2030));
 
-        System.out.println(range.countOfWeeks());
-//        System.out.println(LocalDate.of(2023, 2, 2).getMonth().maxLength());
+        System.out.println(range.countOfYears());
+//        System.out.println((double) 365 / 366);
     }
 }

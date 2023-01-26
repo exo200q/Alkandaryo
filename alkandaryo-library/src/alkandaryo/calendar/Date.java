@@ -51,7 +51,9 @@ public class Date {
             if (number > 1) {
                this.number -= 1;
             } else {
-               ((Day) this).setMonth(((Day) this).getMonth().getValue() -1);
+               if (((Day) this).getMonth().getValue() > 1)
+                   ((Day) this).setMonth(((Day) this).getMonth().getValue() -1);
+               else ((Day) this).setMonth(12);
                this.number = ((Day) this).getMonth().getLength();
             }
          }
@@ -68,27 +70,25 @@ public class Date {
    }
 
    public static class Range {
-      protected List<Day> days;
+      protected List<Day.Week> weeks;
 
       public Range(Date from, Date to) {
-         this.days = new ArrayList<>();
+         this.weeks = new ArrayList<>();
 
-         while (!from.equals(to)) {
-            days.add(from.day);
+         while (from.isLateOrPresentIn(to)) {
+            weeks.add(from.day.getWeek());
             from.next();
          }
       }
 
       public int countOfDays() {
-         return days.size();
+         return weeks.size();
       }
 
       public int countOfWeeks() {
-         int counts = 0;
-         days.forEach((day) -> {
-
-         });
-         return counts;
+         return (int) weeks.stream()
+               .filter(week -> Objects.equals(week.number, Day.Week.SUNDAY))
+               .count();
       }
    }
 
@@ -163,6 +163,15 @@ public class Date {
       day.previous();
       return this;
    }
+
+   public boolean isLateOrPresentIn(Date date) {
+      return day.hashCode() <= date.day.hashCode();
+   }
+
+   public boolean isFutureOrPresentIn(Date date) {
+      return day.hashCode() >= date.day.hashCode();
+   }
+
    @Override
    public boolean equals(Object object) {
       return   day  .equals(((Date) object).day)

@@ -4,13 +4,62 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Day extends Date.Builder<Day> {
+   public static class Week {
+      protected int day;
+      protected int number;
+
+      public static final int MONDAY    = 1;
+      public static final int TUESDAY   = 2;
+      public static final int WEDNESDAY = 3;
+      public static final int THURSDAY  = 4;
+      public static final int FRIDAY    = 5;
+      public static final int SATURDAY  = 6;
+      public static final int SUNDAY    = 7;
+
+      public Week(int number) {
+         this.number = number;
+      }
+
+      public String getName() {
+         switch (number) {
+            case Week.MONDAY    -> { return "Monday"; }
+            case Week.TUESDAY   -> { return "Tuesday"; }
+            case Week.WEDNESDAY -> { return "Wednesday"; }
+            case Week.THURSDAY  -> { return "Thursday"; }
+            case Week.FRIDAY    -> { return "Friday"; }
+            case Week.SATURDAY  -> { return "Saturday"; }
+            case Week.SUNDAY    -> { return "Sunday"; }
+         }
+         return null;
+      }
+
+      public Day getDay() {
+         return day >= 1 && day <= 31 ? new Day(day) : null;
+      }
+
+      public int getValue() {
+         return number;
+      }
+
+      @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
+      @Override
+      public boolean equals(Object object) {
+         return Objects.equals(((Day) object).number, number);
+      }
+
+      @Override
+      public String toString() {
+         return getName();
+      }
+   }
+
    {
       this.month = new Month();
       this.year  = new Year();
    }
 
-   private Month month;
-   private Year year;
+   private final Month month;
+   private final Year year;
 
    public Day() {
       this.number = localDate.getDayOfMonth();
@@ -36,11 +85,13 @@ public class Day extends Date.Builder<Day> {
       return year;
    }
 
-   public String getWeek() {
-      return Date.baseName(LocalDate
+   public Week getWeek() {
+      var week = new Day.Week(LocalDate
             .of(year.number, month.number, number)
             .getDayOfWeek()
-            .name());
+            .getValue());
+      week.day = number;
+      return week;
    }
 
    @Override
@@ -51,8 +102,14 @@ public class Day extends Date.Builder<Day> {
    }
 
    @Override
+   public final int hashCode() {
+      return Integer.parseInt(String
+            .format("%d%d%d", year.number, month.number, number));
+   }
+
+   @Override
    public String toString() {
-      return String.format("%.3s, %s %d, %d", getWeek(),
+      return String.format("%.3s, %s %d, %d", getWeek().getName(),
               month.getName(), number, year.number);
    }
 }

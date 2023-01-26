@@ -7,8 +7,8 @@ import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
-        var range = new Date.Range(new Date(), new Date(02, 26, 2023));
+        var range = new Date.Range(new Date(), new Date(2, 26, 2023));
 
-        System.out.println(range.countOfDays());
+        System.out.println(range.countOfWeeks());
     }
 }

@@ -4,7 +4,6 @@ import alkandaryo.Alkandaryo;
 
 import java.time.LocalDate;
 import java.util.Calendar;
-import java.util.Objects;
 
 public class Month extends Date.Builder<Month> {
     {
@@ -54,6 +53,6 @@ public class Month extends Date.Builder<Month> {
 
     @Override
     public String toString() {
-        return String.format("%d, %s", year.number, Date.baseName(getName()));
+        return String.format("%d, %s", year.number, getName());
     }
 }

@@ -4,9 +4,35 @@ import alkandaryo.Alkandaryo;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.util.Calendar;
+import java.util.*;
 
 public class Month extends Date.Builder<Month> {
+    public static class Weeks implements Iterator<Day.Week> {
+        private List<Day.Week> weeks;
+
+        public Weeks() {
+            this.weeks = new ArrayList<>();
+        }
+
+        public Day.Week get(int number) {
+            for (Day.Week week : weeks) {
+                if (Objects.equals(week.getDay().getValue(), number))
+                    return week;
+            }
+            return null;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return false;
+        }
+
+        @Override
+        public Day.Week next() {
+            return null;
+        }
+    }
+
     {
         this.year = new Year();
         this.year.month = this;

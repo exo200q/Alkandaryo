@@ -104,7 +104,7 @@ public class Day extends Date.Builder<Day> {
    @Override
    public final int hashCode() {
       return Integer.parseInt(String
-            .format("%d%d%d", year.number, month.number, number));
+            .format("%d%d%02d", year.number, month.number, number));
    }
 
    @Override

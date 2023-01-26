@@ -35,7 +35,7 @@ public class Date {
                this.number += 1;
             } else {
                if (((Day) this).getMonth().getValue() < 12)
-                   ((Day) this).setMonth(((Day) this).getMonth().getValue() +1);
+                   ((Day) this).setMonth(((Day) this).getMonth().number +1);
                else ((Day) this).setMonth(1);
                this.number = 1;
             }
@@ -75,7 +75,7 @@ public class Date {
       public Range(Date from, Date to) {
          this.weeks = new ArrayList<>();
 
-         while (from.isLateOrPresentIn(to)) {
+         while (from.day.hashCode() <= to.day.hashCode()) {
             weeks.add(from.day.getWeek());
             from.next();
          }
@@ -151,6 +151,9 @@ public class Date {
       } else if (month.getValue() < 12) {
          month.next();
          day.next();
+
+         // Force month setting...
+         // day.setMonth(month.number);
       } else {
          year.next();
          month.next();
@@ -162,14 +165,6 @@ public class Date {
    public Date previous() {
       day.previous();
       return this;
-   }
-
-   public boolean isLateOrPresentIn(Date date) {
-      return day.hashCode() <= date.day.hashCode();
-   }
-
-   public boolean isFutureOrPresentIn(Date date) {
-      return day.hashCode() >= date.day.hashCode();
    }
 
    @Override

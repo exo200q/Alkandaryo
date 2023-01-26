@@ -2,8 +2,10 @@ package alkandaryo.calendar;
 
 import alkandaryo.Alkandaryo;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.Objects;
 
 public class Month extends Date.Builder<Month> {
     {
@@ -33,7 +35,12 @@ public class Month extends Date.Builder<Month> {
     }
 
     public int getLength() {
-        return LocalDate.of(year.number, number, 1).getMonth().maxLength();
+        var month = LocalDate.of(year.number, number, 1).getMonth();
+        try {
+            return LocalDate.of(year.number, number, month.maxLength()).getMonth().maxLength();
+        } catch (DateTimeException dateTimeException) {
+            return month.maxLength() -1;
+        }
     }
 
     public int getWeeks() {

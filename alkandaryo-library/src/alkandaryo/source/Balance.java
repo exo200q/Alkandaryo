@@ -30,7 +30,7 @@ public final class Balance extends Source<Balance> {
     @Override
     public boolean equals(Object object) {
         return super.equals(object)
-                && Objects.equals(((Balance) object).amount, amount);
+              && amount.equals(((Balance) object).amount);
     }
 
     @Override

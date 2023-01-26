@@ -46,8 +46,8 @@ public class Day extends Date.Builder<Day> {
    @Override
    public boolean equals(Object object) {
       return super.equals(object)
-            && Objects.equals(((Day) object).month, month)
-            && Objects.equals(((Day) object).year,  year);
+            && month.equals(((Day) object).month)
+            && year .equals(((Day) object).year);
    }
 
    @Override

@@ -44,8 +44,7 @@ public class Source<S extends Source<?>> implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        return super.equals(object)
-                && Objects.equals(((Source<?>) object).description, description)
+        return     Objects.equals(((Source<?>) object).description, description)
                 && Objects.equals(((Source<?>) object).name,        name);
     }
 

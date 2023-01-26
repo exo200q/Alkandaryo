@@ -49,7 +49,7 @@ public class Month extends Date.Builder<Month> {
     @Override
     public boolean equals(Object object) {
         return super.equals(object)
-                && Objects.equals(((Month) object).year, year);
+              && year.equals(((Month) object).year);
     }
 
     @Override

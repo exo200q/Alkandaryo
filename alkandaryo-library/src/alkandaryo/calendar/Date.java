@@ -1,6 +1,8 @@
 package alkandaryo.calendar;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Date {
@@ -28,21 +30,65 @@ public class Date {
 
       @SuppressWarnings("unchecked")
       public B next() {
-         this.number += 1;
+         if (this instanceof Day) {
+            if (number < ((Day) this).getMonth().getLength()) {
+               this.number += 1;
+            } else {
+               if (((Day) this).getMonth().getValue() < 12)
+                   ((Day) this).setMonth(((Day) this).getMonth().getValue() +1);
+               else ((Day) this).setMonth(1);
+               this.number = 1;
+            }
+         }
+         else if (this instanceof Month) this.number = number < 12 ? number +1 : 1;
+         else if (this instanceof Year)  this.number += 1;
          return (B) this;
       }
 
       @SuppressWarnings("unchecked")
       public B previous() {
-         this.number -= 1;
+         if (this instanceof Day) {
+            if (number > 1) {
+               this.number -= 1;
+            } else {
+               ((Day) this).setMonth(((Day) this).getMonth().getValue() -1);
+               this.number = ((Day) this).getMonth().getLength();
+            }
+         }
+         if (this instanceof Month) this.number = number > 1 ? number -1 : ((Month) this).getLength();
+         if (this instanceof Year)  this.number = number > 1 ? number -1 : this.getValue();
          return (B) this;
       }
 
       @Override
       public boolean equals(Object object) {
-         return super.equals(object)
-               && Objects.equals(((Builder<?>) object).localDate, localDate)
-               && Objects.equals(((Builder<?>) object).number,    number);
+         return localDate.equals(((Builder<?>) object).localDate)
+               && Objects.equals(((Builder<?>) object).number, number);
+      }
+   }
+
+   public static class Range {
+      protected List<Day> days;
+
+      public Range(Date from, Date to) {
+         this.days = new ArrayList<>();
+
+         while (!from.equals(to)) {
+            days.add(from.day);
+            from.next();
+         }
+      }
+
+      public int countOfDays() {
+         return days.size();
+      }
+
+      public int countOfWeeks() {
+         int counts = 0;
+         days.forEach((day) -> {
+
+         });
+         return counts;
       }
    }
 
@@ -62,9 +108,17 @@ public class Date {
    }
 
    public Date(int month, int day, int year) {
+      // Variable initializations...
       this.day   = new Day(day);
       this.month = new Month(month);
       this.year  = new Year(year);
+
+      // Day's references...
+      this.day.setMonth(month);
+      this.day.setYear(year);
+
+      // Month's references...
+      this.month.setYear(year);
    }
 
    public Day getDay() {
@@ -92,7 +146,16 @@ public class Date {
    }
 
    public Date next() {
-      day.next();
+      if (day.getValue() < month.getLength()) {
+         day.next();
+      } else if (month.getValue() < 12) {
+         month.next();
+         day.next();
+      } else {
+         year.next();
+         month.next();
+         day.next();
+      }
       return this;
    }
 
@@ -100,13 +163,11 @@ public class Date {
       day.previous();
       return this;
    }
-
    @Override
    public boolean equals(Object object) {
-      return super.equals(object)
-              && Objects.equals(((Date) object).day,   day)
-              && Objects.equals(((Date) object).month, month)
-              && Objects.equals(((Date) object).year,  year);
+      return   day  .equals(((Date) object).day)
+            && month.equals(((Date) object).month)
+            && year .equals(((Date) object).year);
    }
 
    @Override

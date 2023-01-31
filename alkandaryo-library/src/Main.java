@@ -1,5 +1,6 @@
 import alkandaryo.Sort;
 import alkandaryo.calendar.Day;
+import alkandaryo.calendar.Month;
 
 import java.util.Arrays;
 
@@ -9,19 +10,13 @@ public class Main {
 //              new Date(2, 26, 2030));
 //
 //        System.out.println(range.countOfYears());
-//        var weeks = new Month(2).getWeeks();
+        var weeks = new Month(1).getWeeks();
+
+//        weeks.sort(Sort.DESCENDING);
+//        weeks.forEach(week -> {
 //
-//        for (Day.Week week : weeks) {
-//            System.out.println(week.getDay().hashCode());
-//        }
-        Sort<Day.Week> days = new Sort<>();
+//        });
 
-        days.add(new Day(1).getWeek());
-        days.add(new Day(3).getWeek());
-        days.add(new Day(2).getWeek());
-
-//        days.setOrder(Sort.DESCENDING);
-
-        days.forEach(week -> System.out.println(week.getDay()));
+        System.out.println(weeks.isParticularly());
     }
 }

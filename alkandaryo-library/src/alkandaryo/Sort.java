@@ -16,20 +16,23 @@ public final class Sort<E extends Sort.Sortable> extends AbstractList<E> {
    }
 
    private final List<E> elements;
-   private long order;
+   private long order = Sort.DEFAULT;
 
    public static final long ASCENDING  = -1L;
    public static final long DESCENDING = 1L;
+   public static final long DEFAULT    = 0L;
 
    public Sort() {
       this.elements = new ArrayList<>();
    }
 
-   public void setOrder(long order) {
+   public boolean setOrder(long order) {
       if   (Objects.equals(order, Sort.ASCENDING)
-         || Objects.equals(order, Sort.DESCENDING)) {
+         || Objects.equals(order, Sort.DESCENDING)
+         || Objects.equals(order, Sort.DEFAULT)) {
          this.order = order;
-      }
+         return true;
+      } else return false;
    }
 
    public long getOrder() {

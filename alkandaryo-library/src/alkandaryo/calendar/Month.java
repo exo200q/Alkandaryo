@@ -4,17 +4,20 @@ import alkandaryo.Sort;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.AbstractList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public class Month extends Date.Builder<Month> {
-    public static class Weeks extends AbstractList<Day.Week>
-          implements Iterator<Day.Week> {
+    public static class Weeks extends AbstractList<Day.Week> implements Iterator<Day.Week> {
         private int index = 0;
 
-        protected List<Day.Week> weeks;
+        protected Sort<Day.Week> weeks;
 
         public Weeks() {
-            this.weeks = new ArrayList<>();
+            this.weeks = new Sort<>();
         }
 
         public Day.Week getByDay(int number) {
@@ -23,6 +26,34 @@ public class Month extends Date.Builder<Month> {
                     return week;
             }
             return null;
+        }
+
+        public boolean sort(long order) {
+            return weeks.setOrder(order);
+        }
+
+        public List<Day.Week> toList() {
+            return weeks.toList();
+        }
+
+        public boolean isParticularly() {
+            for (Day.Week week : weeks) {
+                if (!week.next().equals(next()))
+                    return true;
+            }
+            return false;
+        }
+
+//        public int getCountOfWeeks() {
+//            if (isParticularly()) return size() / 7;
+//            else {
+//
+//            }
+//        }
+
+        @Override
+        public Object[] toArray() {
+            return weeks.toArray();
         }
 
         @Override
@@ -43,6 +74,11 @@ public class Month extends Date.Builder<Month> {
         @Override
         public Day.Week next() {
             return weeks.get(index++);
+        }
+
+        @Override
+        public void forEach(Consumer<? super Day.Week> action) {
+            weeks.forEach(action);
         }
     }
 
@@ -89,12 +125,6 @@ public class Month extends Date.Builder<Month> {
 
     @SuppressWarnings("ReassignedVariable")
     public Weeks getWeeks() {
-//        var calendar = Calendar.getInstance(Alkandaryo.locale);
-//
-//        calendar.set(Calendar.MONTH, number);
-//        calendar.set(Calendar.YEAR,  year.number);
-//
-//        return calendar.get(Calendar.WEEK_OF_MONTH);
         var weeks = new Weeks();
         for (var index = 1; index <= getLength(); index++) {
             var day = new Day(index);

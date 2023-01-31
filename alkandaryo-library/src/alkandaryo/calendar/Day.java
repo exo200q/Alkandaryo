@@ -43,10 +43,17 @@ public class Day extends Date.Builder<Day> {
          return number;
       }
 
+      public Week next() {
+         this.day    = day.next();
+         this.number = day.getWeek().number;
+         return this;
+      }
+
       @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
       @Override
       public boolean equals(Object object) {
-         return Objects.equals(((Day) object).number, number);
+         return Objects.equals(((Week) object).number, number)
+               &&   day.equals(((Week) object).getDay());
       }
 
       @Override

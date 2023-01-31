@@ -1,5 +1,7 @@
-import alkandaryo.Sorting;
+import alkandaryo.Sort;
 import alkandaryo.calendar.Day;
+
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
@@ -12,8 +14,14 @@ public class Main {
 //        for (Day.Week week : weeks) {
 //            System.out.println(week.getDay().hashCode());
 //        }
-        System.out.println(new Object().hashCode());
-        System.out.println(new Object().hashCode());
-        System.out.println(new Object().hashCode());
+        Sort<Day.Week> days = new Sort<>();
+
+        days.add(new Day(1).getWeek());
+        days.add(new Day(3).getWeek());
+        days.add(new Day(2).getWeek());
+
+//        days.setOrder(Sort.DESCENDING);
+
+        days.forEach(week -> System.out.println(week.getDay()));
     }
 }

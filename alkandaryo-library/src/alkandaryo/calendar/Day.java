@@ -1,12 +1,12 @@
 package alkandaryo.calendar;
 
-import alkandaryo.Sorting;
+import alkandaryo.Sort;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class Day extends Date.Builder<Day> {
-   public static class Week implements Sorting.Sortable {
+   public static class Week implements Sort.Sortable {
       protected Day day;
       protected int number;
 
@@ -47,6 +47,11 @@ public class Day extends Date.Builder<Day> {
       @Override
       public boolean equals(Object object) {
          return Objects.equals(((Day) object).number, number);
+      }
+
+      @Override
+      public int getSortKey() {
+         return hashCode();
       }
 
       @Override
